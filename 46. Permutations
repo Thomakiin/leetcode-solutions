@@ -1,0 +1,23 @@
+class Solution {
+    public List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> ans = new ArrayList<List<Integer>>();
+        List<Integer> options = new ArrayList<Integer>();
+        for(int i=0; i<nums.length; i++)
+            options.add(nums[i]);
+        helper(new ArrayList<Integer>(), options, nums.length, ans);
+        return ans;
+        }
+    private void helper(List<Integer> prev, List<Integer> options, int maxLen, List<List<Integer>> ans){
+        if(prev.size() == maxLen){
+            ans.add(prev);
+            return;
+        }
+        for(int i=0; i<options.size(); i++){
+            List<Integer> curr = new ArrayList<Integer>(prev);
+            curr.add(options.get(i));
+            List<Integer> newOptions = new ArrayList<Integer>(options);
+            newOptions.remove(options.get(i));
+            helper(curr, newOptions, maxLen, ans);
+        }
+    }
+}
