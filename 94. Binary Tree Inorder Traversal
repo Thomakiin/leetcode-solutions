@@ -1,0 +1,24 @@
+// https://leetcode.com/problems/binary-tree-inorder-traversal/submissions
+
+// traverse the binary tree, adding elements to a stack with the intention to pop them later, which will invert it into the correct result
+
+class Solution {
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> ans = new ArrayList<Integer>();
+        if(root == null)
+            return ans;
+        Stack<Integer> stk = new Stack<Integer>();  
+        helper(root, stk);
+        while(!stk.empty())
+            ans.add(stk.pop());
+        return ans;
+    }
+    
+    private void helper(TreeNode n, Stack stk) {
+        if(n == null)
+            return;
+        helper(n.right, stk);
+        stk.push(n.val);
+        helper(n.left, stk);
+    }
+}
