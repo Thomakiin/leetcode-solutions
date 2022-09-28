@@ -1,0 +1,24 @@
+// https://leetcode.com/problems/populating-next-right-pointers-in-each-node-ii/
+
+// Maintain a "tail pointer" for each level, directly setting its "next" to the next node of the same level that gets called (we know elements will get called from left to right since we called our recursive function on left then right)  
+
+class Solution {
+    public Node connect(Node root) {
+        List<Node> ans = new ArrayList<Node>();
+        helper(root, 0, ans);
+        return root;
+    }
+    
+    public void helper(Node n, int depth, List<Node> list) {
+        if(n == null)
+            return;
+        if(list.size()-1 < depth)
+            list.add(n);
+        else {
+            list.get(depth).next = n;
+            list.set(depth, n);
+        }
+        helper(n.left, depth + 1, list);
+        helper(n.right, depth + 1, list);
+    }
+}
