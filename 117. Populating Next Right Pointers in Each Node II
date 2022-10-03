@@ -22,3 +22,37 @@ class Solution {
         helper(n.right, depth + 1, list);
     }
 }
+
+
+// FOLLOW-UP SOLUTION
+
+class Solution {
+    public Node connect(Node root) {
+        if(root == null) 
+            return null;
+        if(root.left != null){
+            if(root.right != null)
+                root.left.next = root.right; 
+            else
+                root.left.next = findNext(root);
+        }
+        if(root.right != null){
+            root.right.next = findNext(root);
+        }
+        connect(root.right);
+        connect(root.left);
+        return root;
+    }
+    public Node findNext(Node n) {
+        n = n.next;
+        while(n != null){
+            if(n.left != null)
+                return n.left;
+            else if(n.right != null)
+                return n.right;
+            else
+                n = n.next;
+        }
+        return null;
+    }
+}
