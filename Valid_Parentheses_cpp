@@ -1,0 +1,25 @@
+#include <unordered_map>
+#include <stack>
+
+class Solution {
+public:
+    bool isValid(string s) {
+        stack<char> stk;
+        unordered_map<char, char> map = {{'(', ')'}, {'{', '}'}, {'[', ']'}};
+
+        for (char c : s) {
+            if (map.count(c) == 1) {
+                stk.push(c);
+            } else {
+                // stack will be empty if c was not an opening parentheses 
+                // if c is not the matching closing parentheses then invalid
+                if (stk.empty() || map[stk.top()] != c) 
+                    return false;
+                // otherwise pop the validated opening bracket 
+                stk.pop();
+            }
+        }
+        // if stack is empty then we closed all of the brackets successfully
+        return stk.empty();
+    }
+};
