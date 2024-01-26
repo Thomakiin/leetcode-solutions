@@ -1,0 +1,49 @@
+struct Node {
+    int val;
+    int min; // compared when adding new nodes, ensuring the latest min is always passed along to the front node
+    Node* next;
+    Node(int value) : val(value), next(nullptr), min(INT_MAX) {}
+};
+
+class MinStack {
+public:
+    Node* topNode;
+
+    MinStack() {
+        topNode = nullptr;
+    }
+    
+    void push(int val) {
+        Node* newNode = new Node(val);
+        if(topNode == nullptr){
+            newNode-> min = val;
+            topNode = newNode;
+        }
+        else{
+            topNode->min < val ? newNode->min = topNode->min : newNode->min = val;
+            newNode->next = topNode;
+            topNode = newNode;
+        }
+    }
+    
+    void pop() {
+        topNode = topNode->next;
+    }
+    
+    int top() {
+        return topNode == nullptr ? -1 : topNode->val;
+    }
+    
+    int getMin() {
+        return topNode->min;
+    }
+};
+
+/**
+ * Your MinStack object will be instantiated and called as such:
+ * MinStack* obj = new MinStack();
+ * obj->push(val);
+ * obj->pop();
+ * int param_3 = obj->top();
+ * int param_4 = obj->getMin();
+ */
