@@ -12,7 +12,15 @@ public:
     MinStack() {
         topNode = nullptr;
     }
-    
+
+    ~MinStack() {
+        while (topNode != nullptr) {
+            Node* temp = topNode;
+            topNode = topNode->next;
+            delete temp;
+        }
+    }
+
     void push(int val) {
         Node* newNode = new Node(val);
         if(topNode == nullptr){
